@@ -6,4 +6,8 @@ import { Component } from '@angular/core';
 })
 export class ByCapitalPageComponent {
 
+  searchByCapital ( term:string ): void {
+    console.log(term);
+  }
+  
 }
