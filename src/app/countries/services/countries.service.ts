@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
+
 import { Country } from '../interfaces/country';
 
 @Injectable({providedIn: 'root'})
@@ -14,7 +15,18 @@ export class CountriesService {
     const url = `${this.apiUrl}/capital/${term}`;
 
     // Defino la petición, pero la ejecuto cuando tengo un .subscribe, donde se dispara el observable
-    return this.http.get<Country[]>(url);
+    // .pipe() -> metodo que podemos espeificar diferentes operadores de RxJS (of, tap, map,...)
+    return this.http.get<Country[]>(url)
+      .pipe(
+        // Si sucede un error, lo atrapa y devuelve un nuevo observable, que será un array vacio
+        // catchError( error => {
+        //   return of([])
+        // })
+        catchError( () => of([]))
+      );
+      //.subscribe()
   }
   
+
+  // of() -> sirve para construir un observabale basado en el argumento que le mando
 }
