@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, delay, map, of } from 'rxjs';
 
 import { Country } from '../interfaces/country';
 
@@ -11,6 +11,14 @@ export class CountriesService {
 
   constructor(private http: HttpClient) { }
 
+  private getCountriesRequest( url: string ): Observable<Country[]>{
+    return this.http.get<Country[]>( url )
+    .pipe(
+        catchError( () => of([])),
+        delay( 2000 ),
+      );
+  }
+
   searchCountryByAlphaCode( code: string): Observable<Country | null> {
     const url = `${this.apiUrl}/alpha/${code}`;
     return this.http.get<Country[]>(url)
@@ -20,7 +28,7 @@ export class CountriesService {
       );
   }
 
-  searchCapital( term: string): Observable<Country[]> {
+  searchCapitalFirstVersionNoValid( term: string): Observable<Country[]> {
     const url = `${this.apiUrl}/capital/${term}`;
 
     // Defino la petición, pero la ejecuto cuando tengo un .subscribe, donde se dispara el observable
@@ -37,22 +45,21 @@ export class CountriesService {
   }
   // of() -> sirve para construir un observabale basado en el argumento que le mando
 
+  searchCapital(term: string): Observable<Country[]> {
+    const url = `${this.apiUrl}/capital/${term}`;
+    return this.getCountriesRequest(url);
+  }
+
   searchCountry(term: string): Observable<Country[]> {
     const url = `${this.apiUrl}/name/${term}`;
 
-    return this.http.get<Country[]>(url)
-      .pipe(
-        catchError( () => of([]))
-      );
+    return this.getCountriesRequest(url);
   }
 
   searchRegion(term: string): Observable<Country[]> {
     const url = `${this.apiUrl}/region/${term}`;
 
-    return this.http.get<Country[]>(url)
-      .pipe(
-        catchError( () => of([]))
-      );
+    return this.getCountriesRequest(url);
   }
   
 }
