@@ -2,10 +2,10 @@
 
 ## Demo del proyecto
 
-![Search by Capital](./scr/assets/demoImgs/CountryAppByCapital.png)
-![Search by Country](./scr/assets/demoImgs/CountryAppByCountry.png)
-![Search by Region](./scr/assets/demoImgs/CountryAppByRegion.png)
-![More Info](./scr/assets/demoImgs/CountryAppInfo.png)
+![Search by Capital](./src/assets/demoImgs/CountryAppByCapital.png)
+![Search by Country](./src/assets/demoImgs/CountryAppByCountry.png)
+![Search by Region](./src/assets/demoImgs/CountryAppByRegion.png)
+![More Info](./src/assets/demoImgs/CountryAppInfo.png)
 
 
 ## Puesta en marcha
